@@ -36,7 +36,7 @@ def df_from_nested_dict(d, flat=False):
     Returns:
         :class:`pandas.DataFrame`: DataFrame containing all data.
     """
-    # create flat DataFrame from database_dict
+    # create flat DataFrame from dict
     df = pd.io.json.json_normalize(d)
     if not flat:
         # make it hierarchical 
