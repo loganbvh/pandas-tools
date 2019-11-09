@@ -1,6 +1,5 @@
 import pandas as pd
 import numpy as np
-import json
 from functools import wraps
 
 def fill_empty_fields_with_value(df, value=np.nan):
@@ -221,3 +220,4 @@ def df_to_sqlite(df, table_name, conn=None, path_to_db=None, if_exists='replace'
         df = flatten(df)
     with conn:
         df.to_sql(table_name, conn, index_label=df.index.names, if_exists=if_exists)
+        
