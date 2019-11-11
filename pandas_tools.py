@@ -167,7 +167,7 @@ def drop_nan_levels(df):
         for name, code in zip(df.columns.names, df.columns.codes):
             if all(c == -1 for c in code): # code == -1 means index is NaN
                 df = df.droplevel(name, axis=1)
-    except AttributeError: #df.columns as an Index
+    except AttributeError: #df.columns is an Index
         pass
     return df
 
