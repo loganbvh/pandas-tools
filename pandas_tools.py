@@ -26,21 +26,27 @@ def make_numeric(df, errors='coerce'):
     """
     return df.apply(pd.to_numeric, errors=errors)
 
-def df_from_nested_dict(d, flat=False):
+def df_from_records(records, index=None, levels=None, flat=False):
     """Creates DataFrame from a nested dict or list of dicts.
 
     Args:
-        d (dict): Nested dict or list of dicts from which you want to make a DataFrame.
+        records (list[dict]): List of nested dicts from which you want to make a DataFrame.
         flat (optional, bool): Whether columns should be flat or nested (a MultiIndex)
 
     Returns:
         :class:`pandas.DataFrame`: DataFrame containing all data.
     """
+    if isinstance(records, dict):
+        records = records.values()
     # create flat DataFrame from dict
-    df = pd.io.json.json_normalize(d)
+    df = pd.io.json.json_normalize(records)
+    if index is not None:
+        df = df.set_index(index)
     if not flat:
         # make it hierarchical 
         df.columns = pd.MultiIndex.from_tuples([tuple(c.split('.')) for c in df.columns])
+        if levels is not None:
+            df.columns = df.columns.rename(levels)
     return df
 
 def handle_transpose(multiindex='columns'):
