@@ -68,8 +68,7 @@ def handle_transpose(multiindex='columns'):
         """
         @wraps(func)
         def wrapper(*args, **kwargs):
-            df = args[0]
-            args = args[1:]
+            df = args.pop(0)
             transposed = not isinstance(getattr(df, multiindex), pd.MultiIndex)
             if transposed:
                 df = df.T
